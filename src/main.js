@@ -6,9 +6,21 @@ const loginEl = $('login')
 const profileEl = $('profile')
 const errorEl = $('error')
 
+const noticeEl = $('notice')
+
 function showError(message) {
   errorEl.textContent = message
   errorEl.hidden = !message
+  if (message) showNotice('')
+}
+
+function showNotice(message) {
+  noticeEl.textContent = message
+  noticeEl.hidden = !message
+}
+
+function credentials() {
+  return { email: $('email-input').value.trim(), password: $('password-input').value }
 }
 
 function render(session) {
@@ -43,6 +55,43 @@ $('google-btn').addEventListener('click', async () => {
     options: { redirectTo: window.location.href },
   })
   if (error) showError(error.message)
+})
+
+// Email + password sign in.
+$('email-form').addEventListener('submit', async (e) => {
+  e.preventDefault()
+  showError('')
+  const { email, password } = credentials()
+  if (!email || !password) return showError('Enter your email and password.')
+  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  if (error) showError(error.message)
+})
+
+// Email + password sign up. If "Confirm email" is on in Supabase, no session is returned yet.
+$('signup-btn').addEventListener('click', async () => {
+  showError('')
+  const { email, password } = credentials()
+  if (!email || password.length < 6) return showError('Enter an email and a password of at least 6 characters.')
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { emailRedirectTo: window.location.href },
+  })
+  if (error) return showError(error.message)
+  if (!data.session) showNotice(`Check ${email} for a confirmation link.`)
+})
+
+// Passwordless magic link.
+$('magic-btn').addEventListener('click', async () => {
+  showError('')
+  const { email } = credentials()
+  if (!email) return showError('Enter your email first.')
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: window.location.href },
+  })
+  if (error) return showError(error.message)
+  showNotice(`Magic link sent to ${email}. Open it on this device.`)
 })
 
 $('signout-btn').addEventListener('click', async () => {

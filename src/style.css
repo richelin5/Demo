@@ -37,3 +37,19 @@ h1 { font-size: 1.4rem; margin: 0 0 8px; }
 .avatar { width: 88px; height: 88px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; }
 .error { color: var(--error); margin: 16px 0 0; font-size: 0.9rem; }
 [hidden] { display: none !important; }
+
+form { display: grid; gap: 10px; text-align: left; }
+input {
+  width: 100%; padding: 10px 12px; font: inherit; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text);
+}
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.primary-btn {
+  padding: 10px 16px; font: inherit; font-weight: 500; border-radius: 8px; cursor: pointer;
+  border: 1px solid #1a7f37; background: #1f883d; color: #fff;
+}
+.primary-btn:hover { background: #1a7f37; }
+.link-btn { background: none; border: 0; padding: 4px; font: inherit; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--muted); font-size: 0.85rem; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.notice { color: #1a7f37; margin: 16px 0 0; font-size: 0.9rem; }

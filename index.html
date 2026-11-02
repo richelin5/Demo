@@ -19,6 +19,17 @@
           </svg>
           <span>Continue with Google</span>
         </button>
+        <div class="divider"><span>or</span></div>
+        <form id="email-form" novalidate>
+          <input id="email-input" type="email" placeholder="you@example.com" autocomplete="email" required />
+          <input id="password-input" type="password" placeholder="Password (min 6 characters)" autocomplete="current-password" minlength="6" />
+          <div class="row">
+            <button id="signin-btn" class="primary-btn" type="submit">Sign in</button>
+            <button id="signup-btn" class="secondary-btn" type="button">Sign up</button>
+          </div>
+          <button id="magic-btn" class="link-btn" type="button">Email me a magic link instead</button>
+        </form>
+        <p id="notice" class="notice" role="status" hidden></p>
         <p id="error" class="error" role="alert" hidden></p>
       </section>
 
